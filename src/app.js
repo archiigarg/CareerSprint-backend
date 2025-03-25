@@ -21,7 +21,14 @@ app.get("/", (req, res) => {
   res.send("Hello World");
 });
 
-app.listen(port, async () => {
-  console.log(`Server running on http://localhost:${port}`);
-  await connectDb();
+connectDb().then(() => {
+  console.log("Database connected successfully");
 });
+
+if (process.env.NODE_ENV !== "vercel") {
+  app.listen(port, () => {
+    console.log(`Server running on http://localhost:${port}`);
+  });
+}
+
+export default app; 

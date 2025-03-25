@@ -6,8 +6,8 @@ const userSchema = new mongoose.Schema({
     name: { type: String, required: true },
     lcUsername: { type: String, required: false, default: null },
     courseraname: { type: String, required: false, default: null },
-    linkedIn:{ type: String, required: false, default: null },
-    
+    linkedIn: { type: String, required: false, default: null },
+    gfgUsername: { type: String, required: false, default: null },
 }, {
     timestamps: true,
 });

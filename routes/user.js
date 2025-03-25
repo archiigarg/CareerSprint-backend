@@ -50,7 +50,7 @@ routerUser.post("/attachLC", authenticateFirebaseUser, async (req, res) => {
     console.log("Request Body:", req.body);
 
     const { uid } = req.user;
-    const { lcUsername, linkedIn, courseraName } = req.body;
+    const { lcUsername, linkedIn, courseraName, gfgUsername } = req.body;
 
     if (!uid) {
         return res.status(400).json({ message: "Uid is required" });
@@ -60,6 +60,7 @@ routerUser.post("/attachLC", authenticateFirebaseUser, async (req, res) => {
     if (lcUsername) updateFields.lcUsername = lcUsername;
     if (linkedIn) updateFields.linkedIn = linkedIn;
     if (courseraName) updateFields.courseraname = courseraName;
+    if (gfgUsername) updateFields.gfgUsername = gfgUsername;
 
     try {
         const updatedUser = await User.findOneAndUpdate(
@@ -80,6 +81,5 @@ routerUser.post("/attachLC", authenticateFirebaseUser, async (req, res) => {
         return res.status(500).json({ message: "Server error" });
     }
 });
-
 
 export default routerUser;
