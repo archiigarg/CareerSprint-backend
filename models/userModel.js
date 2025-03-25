@@ -4,7 +4,10 @@ const userSchema = new mongoose.Schema({
     uid: { type: String, required: true, unique: true },
     email: { type: String, required: true, unique: true },
     name: { type: String, required: true },
-    lcUsername: { type: String, required: false, default: null }
+    lcUsername: { type: String, required: false, default: null },
+    courseraname: { type: String, required: false, default: null },
+    linkedIn:{ type: String, required: false, default: null },
+    
 }, {
     timestamps: true,
 });

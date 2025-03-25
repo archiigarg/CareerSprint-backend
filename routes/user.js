@@ -47,39 +47,39 @@ routerUser.get("/", authenticateFirebaseUser, async (req, res) => {
 });
 
 routerUser.post("/attachLC", authenticateFirebaseUser, async (req, res) => {
-    console.log("Request Body:", req.body); // Debug log
+    console.log("Request Body:", req.body);
 
     const { uid } = req.user;
-    const { lcUsername } = req.body;
+    const { lcUsername, linkedIn, courseraName } = req.body;
 
     if (!uid) {
         return res.status(400).json({ message: "Uid is required" });
     }
-    if (!lcUsername) {
-        return res.status(400).json({ message: "Username can't be null" });
-    }
+
+    const updateFields = {};
+    if (lcUsername) updateFields.lcUsername = lcUsername;
+    if (linkedIn) updateFields.linkedIn = linkedIn;
+    if (courseraName) updateFields.courseraname = courseraName;
 
     try {
         const updatedUser = await User.findOneAndUpdate(
             { uid },
-            { $set: { lcUsername } },
-            { new: true } // Returns the updated document
+            { $set: updateFields },
+            { new: true }
         );
 
         if (!updatedUser) {
             return res.status(404).json({ message: "User not found" });
         }
 
-        console.log("Updated User:", updatedUser); // Debug log
+        console.log("Updated User:", updatedUser);
 
-        return res.status(200).json({ message: "Username attached successfully", user: updatedUser });
+        return res.status(200).json({ message: "User details updated successfully", user: updatedUser });
     } catch (err) {
         console.error("Error updating user:", err);
         return res.status(500).json({ message: "Server error" });
     }
 });
-
-
 
 
 export default routerUser;
